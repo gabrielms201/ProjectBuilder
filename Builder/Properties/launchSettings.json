@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Builder": {
+      "commandName": "Project"
+    }
+  }
+}
