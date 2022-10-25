@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Builder": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "new -t AJKSDA"
     }
   }
 }
