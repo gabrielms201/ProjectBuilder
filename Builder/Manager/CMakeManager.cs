@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Builder.Exceptions.Manager;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,7 +14,9 @@ namespace Builder.Manager
     {
         public CMakeManager(IProjectInfo info) : base(info)
         {
-            Projects.AddFirst(info);
+            if (info.ProjectName == null)
+                throw new InvalidProjectNameException("Project Name is Null");
+            Projects.Add(info.ProjectName, info);
         }
 
         public override void ConfigureProjects()

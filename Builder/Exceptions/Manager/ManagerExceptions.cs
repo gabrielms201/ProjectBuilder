@@ -22,4 +22,21 @@ namespace Builder.Exceptions.Manager
         {
         }
     }
+
+    public class InvalidProjectNameException : Exception
+    {
+        public InvalidProjectNameException()
+        {
+        }
+
+        public InvalidProjectNameException(string message)
+            : base(message)
+        {
+        }
+
+        public InvalidProjectNameException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+    }
 }

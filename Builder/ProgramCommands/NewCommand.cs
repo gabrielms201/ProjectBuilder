@@ -30,7 +30,7 @@ namespace Builder.ProgramCommands
             };
             command.SetHandler((projectType, projectName, projectDirectory) =>
             {
-                ProjectInfo projectInfo = (ProjectInfo) GenerateProjectInfo(projectType, projectName, projectDirectory);
+                ProjectInfo projectInfo = (ProjectInfo) ProjectManager.GenerateProjectInfo(projectType, projectName, projectDirectory);
                 NewProject(projectInfo);
             },
             options[NewCommandOptions.ProjectType],

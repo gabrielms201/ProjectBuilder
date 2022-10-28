@@ -16,14 +16,14 @@ namespace Builder.Manager
         INVALID_TYPE
     }
 
-    interface IProjectInfo
+    public interface IProjectInfo
     {
         [JsonConverter(typeof(JsonStringEnumConverter))]
         ProjectType ProjectType { get; set; }
         string? ProjectName { get; set; }
         string? ProjectDirectory { get; set; }
     }
-    internal class ProjectInfo : IProjectInfo
+    public class ProjectInfo : IProjectInfo
     {
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public ProjectType ProjectType { get; set; }
@@ -65,7 +65,7 @@ namespace Builder.Manager
         private bool CurrentProjectAlreadyExists { get; set; }
 
         protected string JsonPath = System.Reflection.Assembly.GetExecutingAssembly().Location + "\\..\\projects.json";
-        public LinkedList<IProjectInfo> Projects { get; set; }
+        public Dictionary<string, IProjectInfo> Projects { get; set; }
         protected ProjectManager(IProjectInfo info)
         {
             CurrentProject = info;
@@ -110,21 +110,30 @@ namespace Builder.Manager
             if (jsonString.Length == 0)
                 return;
 
-            var projects = JsonSerializer.Deserialize<List<ProjectInfo>>(jsonString);
+            var projects = JsonSerializer.Deserialize<Dictionary<string, ProjectInfo>>(jsonString);
 
             if (projects == null)
                 return;
 
             foreach (var project in projects)
             {
-                if (Projects.Contains(project))
+                if (Projects.ContainsKey(project.Key))
                 {
                     CurrentProjectAlreadyExists = true;
                     return;
                 }
-                Projects.AddLast(project);
+                Projects.Add(project.Key, project.Value);
             }
         }
         public abstract void ConfigureProjects();
+
+        public static IProjectInfo GenerateProjectInfo(string projectType, string projectName, string projectDirectory)
+        {
+            ProjectType projectTypeAsEnum;
+            if (!Enum.TryParse(projectType.ToUpper(), out projectTypeAsEnum))
+                projectTypeAsEnum = ProjectType.INVALID_TYPE;
+            ProjectInfo projectInfo = new(projectTypeAsEnum, projectName, projectDirectory);
+            return projectInfo;
+        }
     }
 }

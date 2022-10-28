@@ -14,14 +14,5 @@ namespace Builder.ProgramCommands
         public IProjectInfo? ProjectInfo { get; protected set; }
 
         protected abstract Command LoadCommand();
-
-        public static IProjectInfo GenerateProjectInfo(string projectType, string projectName, string projectDirectory)
-        {
-            ProjectType projectTypeAsEnum;
-            if (!Enum.TryParse(projectType.ToUpper(), out projectTypeAsEnum))
-                projectTypeAsEnum = ProjectType.INVALID_TYPE;
-            ProjectInfo projectInfo = new(projectTypeAsEnum, projectName, projectDirectory);
-            return projectInfo;
-        }
     }
 }
