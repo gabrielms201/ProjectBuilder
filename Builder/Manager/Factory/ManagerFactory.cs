@@ -4,27 +4,22 @@ namespace Builder.Manager.Factory
 {
     internal class ManagerFactory : IManagerFactory
     {
-        private ProjectType ProjectType;
-        private string ProjectName;
-        private string ProjectDirectory;
+        private IProjectInfo _projectInfo;
 
-        public ManagerFactory(string projectType, string projectName, string projectDirectory)
+
+        public ManagerFactory(ProjectInfo projectInfo)
         {
-            if (!Enum.TryParse(projectType, out ProjectType))
-                ProjectType = ProjectType.INVALID_TYPE;
-            ProjectName = projectName;
-            ProjectDirectory = projectDirectory;
+            _projectInfo = projectInfo;
         }
 
         public ProjectManager MakeProjectManager()
         {
-            ProjectInfo info = new(ProjectType, ProjectName, ProjectDirectory);
-            switch (info.ProjectType)
+            switch (_projectInfo.ProjectType)
             {
                 case ProjectType.CMAKE:
-                    return new CMakeManager(info);
+                    return new CMakeManager(_projectInfo);
                 case ProjectType.GIT:
-                    return new GitManager(info);
+                    return new GitManager(_projectInfo);
                 default:
                     throw new InvalidProjectTypeException();
             }

@@ -24,13 +24,14 @@ namespace Builder.ProgramCommands
             var options = GenerateOptions();
             Command command = new Command("new", "Creates a new project")
             {
-            options[NewCommandOptions.ProjectType],
-            options[NewCommandOptions.ProjectName],
-            options[NewCommandOptions.ProjectDirectory]
+                options[NewCommandOptions.ProjectType],
+                options[NewCommandOptions.ProjectName],
+                options[NewCommandOptions.ProjectDirectory]
             };
             command.SetHandler((projectType, projectName, projectDirectory) =>
             {
-                NewProject(projectType.ToUpper(), projectName, projectDirectory);
+                ProjectInfo projectInfo = (ProjectInfo) GenerateProjectInfo(projectType, projectName, projectDirectory);
+                NewProject(projectInfo);
             },
             options[NewCommandOptions.ProjectType],
             options[NewCommandOptions.ProjectName],
@@ -69,11 +70,11 @@ namespace Builder.ProgramCommands
             return options;
         }
 
-        public static void NewProject(string projectType, string projectName, string projectDirectory)
+        public static void NewProject(ProjectInfo info)
         {
             try
             {
-                ManagerFactory factory = new(projectType, projectName, projectDirectory);
+                ManagerFactory factory = new(info);
                 ProjectManager manager = factory.MakeProjectManager();
                 manager.OnNewProjectCommand();
             }
@@ -81,6 +82,7 @@ namespace Builder.ProgramCommands
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ex);
+                Console.ResetColor();
             }
 
         }

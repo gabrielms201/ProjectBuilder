@@ -18,6 +18,7 @@ namespace Builder
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return 1;
             }
 
