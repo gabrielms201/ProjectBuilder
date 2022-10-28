@@ -1,6 +1,5 @@
 ﻿using Builder.CommandParser;
-using System.CommandLine;
-using System.CommandLine.Invocation;
+using Builder.Exceptions.Parser;
 
 namespace Builder
 {
@@ -8,12 +7,20 @@ namespace Builder
     {
         public static int Main(string[] args)
         {
-            CommandLineParser parser = new(args);
-            parser.ParseArguments();
-            if (parser.ErrorParsing)
-                return 1;
+            try
+            {
+                CommandLineParser parser = new(args);
+                parser.ParseArguments();
+                if (parser.ErrorParsing)
+                    throw new InvalidCommandArguments();
 
-            return 0;
+                return 0;
+            }
+            catch (Exception e)
+            {
+                return 1;
+            }
+
         }
 
     }

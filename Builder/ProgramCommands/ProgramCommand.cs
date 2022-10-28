@@ -9,7 +9,7 @@ namespace Builder.ProgramCommands
 {
     internal abstract class ProgramCommand
     {
-        public Command? Content { get; internal set; }
+        public Command? Content { get; protected set; }
 
         protected abstract Command LoadCommand();
     }

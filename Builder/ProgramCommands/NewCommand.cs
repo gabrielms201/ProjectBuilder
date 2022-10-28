@@ -1,12 +1,8 @@
-﻿using Builder.CommandParser;
-using System;
+﻿using Builder.Manager;
+using Builder.Manager.Factory;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.CommandLine;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Builder.ProgramCommands
 {
@@ -18,7 +14,7 @@ namespace Builder.ProgramCommands
             ProjectName,
             ProjectDirectory
         }
-        
+
         public NewCommand()
         {
             Content = LoadCommand();
@@ -28,15 +24,15 @@ namespace Builder.ProgramCommands
             var options = GenerateOptions();
             Command command = new Command("new", "Creates a new project")
             {
-                options[NewCommandOptions.ProjectType],
-                options[NewCommandOptions.ProjectName],
-                options[NewCommandOptions.ProjectDirectory]
+            options[NewCommandOptions.ProjectType],
+            options[NewCommandOptions.ProjectName],
+            options[NewCommandOptions.ProjectDirectory]
             };
             command.SetHandler((projectType, projectName, projectDirectory) =>
             {
-                NewProject(projectType.ToLower(), projectName, projectDirectory);
-            }, 
-            options[NewCommandOptions.ProjectType], 
+                NewProject(projectType.ToUpper(), projectName, projectDirectory);
+            },
+            options[NewCommandOptions.ProjectType],
             options[NewCommandOptions.ProjectName],
             options[NewCommandOptions.ProjectDirectory]
             );
@@ -75,7 +71,18 @@ namespace Builder.ProgramCommands
 
         public static void NewProject(string projectType, string projectName, string projectDirectory)
         {
-            Console.WriteLine("NEW PROJECT NAMED " + projectType + " NAME: " + projectName + " DIR: " + projectDirectory);
+            try
+            {
+                ManagerFactory factory = new(projectType, projectName, projectDirectory);
+                ProjectManager manager = factory.MakeProjectManager();
+                manager.OnNewProjectCommand();
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex);
+            }
+
         }
 
     }

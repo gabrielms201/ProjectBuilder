@@ -2,7 +2,7 @@
   "profiles": {
     "Builder": {
       "commandName": "Project",
-      "commandLineArgs": "new -t AJKSDA"
+      "commandLineArgs": "new -t cmake -n dsds"
     }
   }
 }

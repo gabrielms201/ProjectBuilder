@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.CommandLine;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
+﻿using System.CommandLine;
 
 namespace Builder.CommandParser
 {
@@ -36,11 +27,6 @@ namespace Builder.CommandParser
                 if (command != null)
                 {
                     _rootCommand.Add(command);
-                }
-                else
-                {
-                    // TODO : Improve this exception
-                    throw new Exception("Error parsing Commands");
                 }
             }
 
