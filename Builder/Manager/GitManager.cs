@@ -1,4 +1,6 @@
-﻿namespace Builder.Manager
+﻿using Builder.Manager.ProjectInformation;
+
+namespace Builder.Manager
 {
     internal class GitManager : ProjectManager
     {

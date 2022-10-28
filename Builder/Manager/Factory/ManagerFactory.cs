@@ -1,4 +1,5 @@
 ﻿using Builder.Exceptions.Manager;
+using Builder.Manager.ProjectInformation;
 
 namespace Builder.Manager.Factory
 {

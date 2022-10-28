@@ -1,11 +1,6 @@
-﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Builder.Manager.ProjectInformation;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Builder.Manager
 {
@@ -16,49 +11,6 @@ namespace Builder.Manager
         INVALID_TYPE
     }
 
-    public interface IProjectInfo
-    {
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        ProjectType ProjectType { get; set; }
-        string? ProjectName { get; set; }
-        string? ProjectDirectory { get; set; }
-    }
-    public class ProjectInfo : IProjectInfo
-    {
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public ProjectType ProjectType { get; set; }
-        public string? ProjectName { get; set; }
-        public string? ProjectDirectory { get; set; }
-
-        public ProjectInfo(ProjectType projectType, string? projectName, string? projectDirectory)
-        {
-            ProjectType = projectType;
-            ProjectName = projectName;
-            ProjectDirectory = projectDirectory;
-
-        }
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as ProjectInfo);
-        }
-        public bool Equals(ProjectInfo? other)
-        {
-            if (other != null)
-                if (other.ProjectName == ProjectName || other.ProjectDirectory == ProjectDirectory)
-                    return true;
-            return false;
-        }
-
-        public override string ToString()
-        {
-            return ProjectType.ToString() + ":" + ProjectName + ":" + ProjectDirectory;
-        }
-
-        public override int GetHashCode()
-        {
-            throw new NotImplementedException();
-        }
-    }
     internal abstract class ProjectManager
     {
         public IProjectInfo CurrentProject { get; set; }

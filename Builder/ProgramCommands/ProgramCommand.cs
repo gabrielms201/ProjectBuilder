@@ -1,10 +1,5 @@
-﻿using Builder.Manager;
-using System;
-using System.Collections.Generic;
+﻿using Builder.Manager.ProjectInformation;
 using System.CommandLine;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Builder.ProgramCommands
 {

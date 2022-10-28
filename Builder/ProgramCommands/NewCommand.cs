@@ -1,5 +1,6 @@
 ﻿using Builder.Manager;
 using Builder.Manager.Factory;
+using Builder.Manager.ProjectInformation;
 using System.Collections.Concurrent;
 using System.CommandLine;
 
